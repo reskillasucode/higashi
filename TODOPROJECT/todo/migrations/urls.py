@@ -1,7 +1,7 @@
-from django.contrib import admin
 from django.urls import path, include
+from .views import TodoList, TodoDetail
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('todo.urls'))
+    path('list/', TodoList.as_view()),
+    path('detail/', TodoDetail.as_view())
 ]
