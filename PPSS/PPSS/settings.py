@@ -55,7 +55,7 @@ ROOT_URLCONF = 'PPSS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':[BASE_DIR / 'templates'],
+        'DIRS':[BASE_DIR / 'ppss/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

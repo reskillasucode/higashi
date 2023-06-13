@@ -21,5 +21,5 @@ def payment_method_list(request):
 class CompanyCreateView(CreateView):
     model = Company
     fields = '__all__'
-    template_name = 'company_create.html'
+    template_name = 'ppss/company_create.html'
     success_url = '/'
