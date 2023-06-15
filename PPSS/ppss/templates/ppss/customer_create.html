@@ -8,10 +8,10 @@
     <button type="submit">登録</button>
   </form>
 
-  <h2>担当者登録</h2>
+  <h2>顧客登録</h2>
   <form method="post" action="{% url 'customer_create' %}">
     {% csrf_token %}
-    {{ customer_form.as_p }}
+    {{ form.as_p }}
     <button type="submit">登録</button>
   </form>
 {% endblock %}

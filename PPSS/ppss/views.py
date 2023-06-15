@@ -1,3 +1,4 @@
+from django import forms
 from django.shortcuts import render
 from django.views.generic import CreateView
 from .models import Payment, Customer, Invoice, PaymentMethod, Company
@@ -23,3 +24,24 @@ class CompanyCreateView(CreateView):
     fields = '__all__'
     template_name = 'ppss/company_create.html'
     success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['customers'] = Customer.objects.all()
+        return context
+
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
+
+def customer_create(request):
+    if request.method == 'POST':
+        form = CustomerForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CustomerForm()
+    return render(request, 'ppss/customer_create.html', {'form': form})

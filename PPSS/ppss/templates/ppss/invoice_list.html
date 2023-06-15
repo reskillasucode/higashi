@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>請求書一覧</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>請求書番号</th>
+        <th>発行日</th>
+        <th>クライアント名</th>
+        <th>金額</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invoice in invoices %}
+      <tr>
+        <td>{{ invoice.invoice_number }}</td>
+        <td>{{ invoice.issue_date }}</td>
+        <td>{{ invoice.customer.name }}</td>
+        <td>{{ invoice.amount }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

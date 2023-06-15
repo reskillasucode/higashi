@@ -26,10 +26,23 @@ class Payment(models.Model):
     def __str__(self):
         return f'Payment: {self.customer}'
 
+class Company(models.Model):
+    name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+def get_default_company():
+    default_company, _ = Company.objects.get_or_create(name='Default Company')
+    return default_company.pk
+
+
 class Customer(models.Model):
     last_name = models.CharField(max_length=50)
     first_name = models.CharField(max_length=50)
     email = models.EmailField()
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, default=get_default_company)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name}'
@@ -76,8 +89,3 @@ class PaymentReview(models.Model):
         to_email = 'recipient@example.com'
         send_mail(subject, message, from_email, [to_email])
 
-class Company(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
