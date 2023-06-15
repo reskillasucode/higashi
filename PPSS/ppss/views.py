@@ -1,7 +1,8 @@
 from django import forms
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 from .models import Payment, Customer, Invoice, PaymentMethod, Company
+from .forms import InvoiceForm, CustomerForm
 
 def payment_list(request):
     payments = Payment.objects.all()
@@ -18,6 +19,17 @@ def invoice_list(request):
 def payment_method_list(request):
     payment_methods = PaymentMethod.objects.all()
     return render(request, 'ppss/payment_method_list.html', {'payment_methods': payment_methods})
+
+def create_invoice(request):
+    if request.method == 'POST':
+        form = InvoiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('invoice_list')
+    else:
+        form = InvoiceForm()
+    return render(request, 'ppss/invoice_create.html', {'form': form})
+
 
 class CompanyCreateView(CreateView):
     model = Company
@@ -45,3 +57,9 @@ def customer_create(request):
     else:
         form = CustomerForm()
     return render(request, 'ppss/customer_create.html', {'form': form})
+
+class CustomerCreateView(CreateView):
+    model = Customer
+    fields = '__all__'
+    template_name = 'ppss/customer_create.html'
+    success_url = '/'
