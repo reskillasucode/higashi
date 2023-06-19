@@ -1,17 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>会社情報登録</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">登録</button>
-  </form>
+<h2>クライアント担当者登録</h2>
+<form method="POST">
+  {% csrf_token %}
+  
+  <label for="id_company">会社情報:</label>
+  <select name="company" id="id_company">
+    {% for company in companies %}
+      <option value="{{ company.id }}">{{ company.name }}</option>
+    {% endfor %}
+  </select>
+  
+  <label for="id_last_name">姓:</label>
+  <input type="text" name="last_name" id="id_last_name">
+  
+  <label for="id_first_name">名:</label>
+  <input type="text" name="first_name" id="id_first_name">
+  
+  <label for="id_last_name_reading">姓（ふりがな）:</label>
+  <input type="text" name="last_name_reading" id="id_last_name_reading">
 
-  <h2>顧客登録</h2>
-  <form method="post" action="{% url 'customer_create' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">登録</button>
-  </form>
+  <label for="id_first_name_reading">名（ふりがな）:</label>
+  <input type="text" name="first_name_reading" id="id_first_name_reading">
+
+  <label for="id_phone_number">電話番号:</label>
+  <input type="number" name="phone_number" id="id_phone_number">
+  
+  <label for="id_email">メールアドレス:</label>
+  <input type="email" name="email" id="id_email">
+  
+  <label for="id_email_setting">メール設定:</label>
+  <select name="email_setting" id="id_email_setting">
+    <option value="approval">支払いデータ承認担当</option>
+    <option value="fund_request">ファンドリクエスト承認担当</option>
+    <option value="cash_report">キャッシュレポート受信者</option>
+    <option value="no_email">メールを受信しない</option>
+  </select>
+  
+  <button type="submit">登録</button>
+</form>
+
 {% endblock %}

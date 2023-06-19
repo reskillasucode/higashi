@@ -4,6 +4,8 @@ from django.views.generic import CreateView
 from .models import Payment, Customer, Invoice, PaymentMethod, Company
 from .forms import InvoiceForm, CustomerForm
 
+# 以下略
+
 def payment_list(request):
     payments = Payment.objects.all()
     return render(request, 'ppss/payment_list.html', {'payments': payments})
