@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Bank name"
+msgstr "銀行名"
+
+msgid "Branch name"
+msgstr "支店名"
+
+msgid "Branch number"
+msgstr "支店番号"
+
+msgid "Account type"
+msgstr "口座種類"
+
+msgid "Account holder"
+msgstr "口座名義"
+
+msgid "Account number"
+msgstr "口座番号"

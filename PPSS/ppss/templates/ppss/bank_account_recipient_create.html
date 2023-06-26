@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>支払先 銀行口座情報登録</h2>
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <div>
+      <label for="{{ form.bank_name.id_for_label }}">銀行名:</label>
+      {{ form.bank_name }}
+    </div>
+
+    <div>
+      <label for="{{ form.branch_name.id_for_label }}">支店名:</label>
+      {{ form.branch_name }}
+    </div>
+
+    <div>
+      <label for="{{ form.branch_number.id_for_label }}">支店番号:</label>
+      {{ form.branch_number }}
+    </div>
+
+    <div>
+      <label for="{{ form.account_number.id_for_label }}">口座番号:</label>
+      {{ form.account_number }}
+    </div>
+
+    <div>
+      <label for="{{ form.account_holder.id_for_label }}">口座名義人:</label>
+      {{ form.account_holder }}
+    </div>
+
+    <div>
+      <label for="{{ form.account_type.id_for_label }}">口座種類:</label>
+      {{ form.account_type }}
+    </div>
+
+    <button type="submit">登録</button>
+  </form>
+{% endblock %}

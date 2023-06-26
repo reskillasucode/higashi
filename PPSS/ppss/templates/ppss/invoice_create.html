@@ -1,6 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>請求書データ登録</h2>
 <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">保存</button>
-  </form>
-  
+  {% csrf_token %}
+
+  <label for="id_company">会社情報:</label>
+  <select name="company" id="id_company">
+    {% for company in companies %}
+      <option value="{{ company.id }}">{{ company.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label for="id_amount">金額:</label>
+  <input type="number" name="amount" id="id_amount">
+
+  <label for="id_invoice_date">請求日:</label>
+  <input type="date" name="invoice_date" id="id_invoice_date">
+
+  <label for="id_invoice_number">請求書番号:</label>
+  <input type="text" name="invoice_number" id="id_invoice_number">
+
+  <label for="id_payment_method">支払い方法:</label>
+  <select name="payment_method" id="id_payment_method">
+    {% for method in payment_methods %}
+      <option value="{{ method.id }}">{{ method.name }}</option>
+    {% endfor %}
+  </select>
+
+  <button type="submit">作成</button>
+</form>
+{% endblock %}

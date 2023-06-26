@@ -69,12 +69,21 @@ class PaymentMethod(models.Model):
         return self.payment_method
 
 class BankAccount(models.Model):
-    bank_name = models.CharField(max_length=100)
-    account_number = models.CharField(max_length=7)
+    BANK_CHOICES = [
+        ('savings', '普通預金'),
+        ('checking', '当座預金'),
+        ('others', 'その他')
+    ]
+        
+    bank_name = models.CharField(max_length=50)
+    branch_name = models.CharField(max_length=20, default='default_branch_name')
+    branch_number = models.PositiveIntegerField(default=000)
+    account_number = models.PositiveIntegerField(default=0000000)
     account_holder = models.CharField(max_length=30)
+    account_type = models.CharField(max_length=20, choices=BANK_CHOICES)
 
     def __str__(self):
-        return f'{self.bank_name} - {self.account_number}'
+        return f'{self.bank_name} - {self.account_holder}'
 
 class PaymentReview(models.Model):
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE)
@@ -89,3 +98,21 @@ class PaymentReview(models.Model):
         to_email = 'recipient@example.com'
         send_mail(subject, message, from_email, [to_email])
 
+from django.db import models
+
+class BankAccountRecipient(models.Model):
+    BANK_CHOICES = [
+        ('savings', '普通預金'),
+        ('checking', '当座預金'),
+        ('others', 'その他')
+    ]
+        
+    bank_name = models.CharField(max_length=50)
+    branch_name = models.CharField(max_length=20, default='default_branch_name')
+    branch_number = models.PositiveIntegerField(default=0)
+    account_number = models.PositiveIntegerField(default=0)
+    account_holder = models.CharField(max_length=30)
+    account_type = models.CharField(max_length=20, choices=BANK_CHOICES)
+
+    def __str__(self):
+        return self.bank_name

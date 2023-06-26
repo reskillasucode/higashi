@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load my_templatetags %}
+
+{% block content %}
+  <h2>{% trans "支払元　銀行口座情報登録" %}</h2>
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <div>
+      <label for="{{ form.branch_name.id_for_label }}">{% trans "支店名" %}:</label>
+      {{ form.branch_name }}
+    </div>
+
+    <div>
+      <label for="{{ form.account_type.id_for_label }}">{% trans "口座種類" %}:</label>
+      {{ form.account_type }}
+    </div>
+
+    <button type="submit">{% trans "登録" %}</button>
+  </form>
+{% endblock %}
