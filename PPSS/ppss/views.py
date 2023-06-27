@@ -2,7 +2,7 @@ from django.views.generic import CreateView, ListView
 from django import forms
 from django.shortcuts import render, redirect
 from .models import Payment, Customer, Invoice, PaymentMethod, Company, BankAccount, BankAccountRecipient
-from .forms import InvoiceForm, CustomerForm, BankAccountForm
+from .forms import InvoiceForm, CustomerForm, BankAccountForm, PpssReview
 
 from django.views.generic import ListView
 from .models import Company
@@ -82,8 +82,28 @@ class BankAccountCreateView(CreateView):
 class BankAccountRecipientCreateView(CreateView):
     model = BankAccountRecipient
     fields = ['account_number', 'branch_number', 'branch_name', 'account_type']
-    template_name = 'bank_account_recipient_create.html'
+    template_name = 'ppss/bank_account_recipient_create.html'
     success_url = '/success-url/' 
 
     def form_valid(self, form):
         return super().form_valid(form)
+
+def ppss_review(request, invoice_id):
+    # 対象のInvoiceオブジェクトを取得
+    invoice = Invoice.objects.get(id=invoice_id)
+
+    if request.method == 'POST':
+        form = PpssReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.invoice = invoice
+            review.save()
+            return redirect('invoice_detail', invoice_id=invoice_id)
+    else:
+        form = PpssReviewForm()
+
+    context = {
+        'form': form,
+        'invoice': invoice,
+    }
+    return render(request, 'ppss_review.html', context)

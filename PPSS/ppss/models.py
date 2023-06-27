@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from .models import PpssReview
 
 class Payment(models.Model):
      # ステータスの選択肢
@@ -52,7 +53,11 @@ class Invoice(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=0)
     invoice_date = models.DateField()
     invoice_number = models.CharField(max_length=20)
-
+    applied_date=models.DateField(auto_now=True)
+    STATUS_CHOICE = ((0,'申請中'),(1, '承認'),(2, '却下'))
+    status = models.IntegerField(choices=STATUS_CHOICE, default=0)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    
     def __str__(self):
         return self.invoice_number
 
@@ -116,3 +121,13 @@ class BankAccountRecipient(models.Model):
 
     def __str__(self):
         return self.bank_name
+
+class PpssReview(models.Model):
+    comment = models.TextField()
+    invoice = models.OneToOneField(
+        Invoice,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.invoice.invoice_number
